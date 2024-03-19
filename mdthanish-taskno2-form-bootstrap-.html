@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Joining Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <style>
+
+    .custom-bg {
+      background-image: url('https://media4.giphy.com/media/FlodpfQUBSp20/giphy.gif?cid=ecf05e47bg8h6xf9ailu7azcgxve0fyb01nft3f644dx4zrc&ep=v1_gifs_related&rid=giphy.gif&ct=g');
+      background-size: cover;
+    }
+
+    .glow {
+      animation: glow-animation 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow-animation {
+      from {
+        box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #0ff, 0 0 20px #0ff, 0 0 80px #0ff, 0 0 10px #0ff, 0 0 50px #0ff;
+      }
+
+      to {
+        box-shadow: 0 0 20px #fff, 0 0 30px rgb(64, 79, 79), 0 0 20px rgb(0, 89, 255), 0 0 20px rgb(0, 255, 17), 0 0 80px rgb(0, 255, 17), 0 0 10px rgb(0, 255, 8), 0 0 50px rgb(17, 255, 0), 0 0 50px #0ff;
+      }
+    }
+
+  </style>
+</head>
+
+<body class="custom-bg">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+        <img src="https://media2.giphy.com/media/RKYGoNOFHOOluVO7lp/200.webp?cid=790b7611hvek5s60opsgih1etg01nnc8w9vrqpe7dsjqwjpe&ep=v1_gifs_search&rid=200.webp&ct=g" alt="GIF" class="img-fluid mb-4 glow">
+      </div>
+      <div class="col-md-12">
+        <div class="card bg-secondary" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-body">
+            <img id="internship-logo" src="https://tse1.mm.bing.net/th?id=OIP.ylmfg8i0NEccIFYyT9ZMMgHaHa&pid=Api&P=0&h=220" alt="Company Logo" class="mx-auto d-block mb-4">
+            <h2 class="text-center text-white animate__animated animate__pulse animate__infinite"><span class="text-decoration-underline"></span><span class="text-decoration-underline"></span>MacBerries Internship Joining Form</h2>
+            <p class="text-center mb-4 text-white">Please fill in the form below to join the internship program</p>
+            
+            <form action="insert.php" method="POST" id="joiningForm">
+              <table class="table table-dark table-striped">
+                <tr>
+                  <td><label for="joinDate" class="form-label text-white">Date of Joining:</label></td>
+                  <td><input type="date" id="joinDate" name="joinDate" class="form-control" required></td>
+                </tr>
+                <tr>
+                  <td><label for="firstName" class="form-label text-white">First Name:</label></td>
+                  <td><input type="text" id="firstName" name="firstName" class="form-control" required></td>
+                </tr>
+                <tr>
+                  <td><label for="lastName" class="form-label text-white">Last Name:</label></td>
+                  <td><input type="text" id="lastName" name="lastName" class="form-control" required></td>
+                </tr>
+                <tr>
+                  <td><label for="email" class="form-label text-white">Email:</label></td>
+                  <td><input type="email" id="email" name="email" class="form-control" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required></td>
+                </tr>
+                <tr>
+                  <td><label for="phone" class="form-label text-white">Phone Number:</label></td>
+                  <td><input type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]{10}" oninput="validatePhoneNumber(this)" required><span id="phone-error" style="color: red;"></span></td>
+                </tr>
+                <tr>
+                  <td><label for="dob" class="form-label text-white">Date of Birth:</label></td>
+                  <td><input type="date" id="dob" name="dob" class="form-control" max="<?php echo date('Y-m-d');?>" onchange="validateDOB()" required><span id="dob-error" style="color: red;"></span></td>
+                </tr>
+                <tr>
+                  <td><label for="age" class="form-label text-white">Age:</label></td>
+                  <td><input type="text" id="age" name="age" class="form-control" readonly></td>
+                </tr>
+                <tr>
+                  <td><label for="dept" class="form-label text-white">Department:</label></td>
+                  <td><select id="dept" name="dept" class="form-select" required onchange="showDepartmentInput()">
+                      <option value="">Select Department</option>
+                      <option value="AI&DS">AI&DS</option>
+                      <option value="CSE">CSE</option>
+                      <option value="IT">IT</option>
+                      <option value="EEE">EEE</option>
+                      <option value="MECH">MECH</option>
+                      <option value="OTHER">OTHER</option>
+                    </select></td>
+                </tr>
+                <tr id="otherDepartment" style="display:none;">
+                  <td><label for="otherDeptInput" class="form-label text-white">Type the Department Name:</label></td>
+                  <td><input type="text" id="otherDeptInput" name="otherDeptInput" class="form-control"></td>
+                </tr>
+                <tr>
+                  <td><label for="internPeriod" class="form-label text-white">Internship Period (days):</label></td>
+                  <td><input type="number" id="internPeriod" name="internPeriod" class="form-control" min="1" required></td>
+                </tr>
+                <tr>
+                  <td><label for="lastDate" class="form-label text-white">Last Date:</label></td>
+                  <td><input type="text" id="lastDate" name="lastDate" class="form-control" readonly></td>
+                </tr>
+              </table>
+              <button type="submit" class="btn btn-success w-100 glow">Submit</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    function validateDOB() {
+      const dobInput = document.getElementById('dob').value;
+      const dob = new Date(dobInput);
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
+      const currentDay = currentDate.getDate();
+
+      if (dob > currentDate) {
+        document.getElementById('dob-error').innerText = "Please provide a valid date of birth";
+        document.getElementById('dob').setCustomValidity("Please provide a valid date of birth");
+        document.getElementById('age').value = ""; // Clear age input if DOB is invalid
+        document.getElementById('age-error').innerText = ""; // Clear age error message
+      } else {
+        document.getElementById('dob-error').innerText = "";
+        document.getElementById('dob').setCustomValidity("");
+
+        // Calculate Age
+        let age = currentYear - dob.getFullYear();
+        if (currentMonth < dob.getMonth() || (currentMonth === dob.getMonth() && currentDay < dob.getDate())) {
+          age--;
+        }
+        document.getElementById('age').value = age;
+        document.getElementById('age-error').innerText = ""; // Clear age error message
+      }
+    }
+
+    function validatePhoneNumber(input) {
+      const phoneNumber = input.value;
+      const numbers = /^[0-9]+$/;
+      if (!phoneNumber.match(numbers)) {
+        document.getElementById('phone-error').innerText = "Please type numbers only";
+        input.setCustomValidity("Please type numbers only"); // set custom validity for the field
+      } else {
+        document.getElementById('phone-error').innerText = '';
+        input.setCustomValidity(""); // clear custom validity
+      }
+    }
+
+    function showDepartmentInput() {
+      var select = document.getElementById("dept");
+      var otherDeptInput = document.getElementById("otherDepartment");
+
+      if (select.value === "OTHER") {
+        otherDeptInput.style.display = "table-row";
+      } else {
+        otherDeptInput.style.display = "none";
+      }
+    }
+
+    document.getElementById('internPeriod').addEventListener('input', function () {
+      var joinDate = new Date(document.getElementById('joinDate').value);
+      var internPeriod = parseInt(this.value);
+      if (!isNaN(internPeriod)) {
+        var lastDate = new Date(joinDate.getTime() + internPeriod * 24 * 60 * 60 * 1000);
+        var formattedLastDate = lastDate.getDate() + '/' + (lastDate.getMonth() + 1) + '/' + lastDate.getFullYear();
+        document.getElementById('lastDate').value = formattedLastDate;
+      }
+    });
+
+  
+
+  </script>
+
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2liOHZxOHd6ZzQxaXZmNWIwdW5vOHhkMXN1ajl5emxocTZlcDBrMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/g2RNvrGx6bffjE6hgt/giphy.gif" alt="GIF" class="img-fluid mb-4">
+      </div>
+      <div class="col-md-12 text-center">
+        <h3 class="fw-bold text-white">Mohamed Thanish.M</h3>
+        <p class="fw-bold text-white" style="font-size: 12px;">Copyright @2024</p>
+        <h4 class="text-center text-white">To get more info</h4>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary btn-sm me-2">
+            Mobile No: <a href="tel:+919566592950" class="text-white">9566592950</a>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm me-2" onclick="openMailTo()">
+            Email ID: mohamedthanish14@gmail.com
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm me-2">
+            LinkedIn ID: <a href="https://www.linkedin.com/in/mohamed-thanish-m-b82053218/" class="text-white">Mohamed Thanish M</a>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
